@@ -1,0 +1,28 @@
+{
+  "name": "api-rest-nodejs",
+  "version": "1.0.0",
+  "description": "Api resto en NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aaronFdez/api_rest_NodeJS.git"
+  },
+  "author": "Aarón FErnández García",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aaronFdez/api_rest_NodeJS/issues"
+  },
+  "homepage": "https://github.com/aaronFdez/api_rest_NodeJS#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "connect-multiparty": "^2.2.0",
+    "express": "^4.19.2",
+    "mongoose": "^8.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

@@ -1,1 +1,3 @@
 /node_modules/
+# Ignorar la carpeta .idea
+.idea/

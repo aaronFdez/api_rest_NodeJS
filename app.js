@@ -14,5 +14,6 @@ app.use(bodyParser.json());
 
 // rutas
 
+
 //exportar
 module.exports = app;

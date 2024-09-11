@@ -1,7 +1,7 @@
 'use strict'
 var Project = require('../models/project');
 
-var controller= {
+var controller = {
     home: function (req, res) {
         return res.status(200).send({
             message: 'Hola mundo desde mi API de NodeJS Index'
@@ -26,15 +26,25 @@ var controller= {
         try {
             const projectStored = await project.save();  // Esperar a que se guarde el proyecto
             if (!projectStored) {
-                return res.status(404).send({ message: 'No se ha podido guardar el documento' });
+                return res.status(404).send({message: 'No se ha podido guardar el documento'});
             }
-            return res.status(200).send({ project: projectStored });
+            return res.status(200).send({project: projectStored});
         } catch (err) {
-            return res.status(500).send({ message: 'Error al guardar el documento' });
+            return res.status(500).send({message: 'Error al guardar el documento'});
         }
     },
-
-
+    getProject: async function (req, res) {
+        var projectId = req.params.id;
+        try {
+            const project = await Project.findById(projectId);
+            if (!project) {
+                return res.status(404).send({message: 'No se ha encontrado el proyecto'});
+            }
+            return res.status(200).send({project});
+        } catch (err) {
+            return res.status(500).send({message: 'Error al obtener el proyecto'});
+        }
+    },
     getProjects: async function (req, res) {
         try {
             const projects = await Project.find();
@@ -45,7 +55,52 @@ var controller= {
         } catch (err) {
             return res.status(500).send({message: 'Error al obtener los proyectos'});
         }
+    },
+    updateProject: async function (req, res) {
+        var projectId = req.params.id;
+        var update = req.body;
+        try {
+            const project = await Project.findByIdAndUpdate(projectId, update, {new: true});
+            if (!project) {
+                return res.status(404).send({message: 'No se ha encontrado el proyecto'});
+            }
+            return res.status(200).send({project});
+        } catch (err) {
+            return res.status(500).send({message: 'Error al actualizar el proyecto'});
+        }
+    },
+    deleteProject: async function (req, res) {
+        var projectId = req.params.id;
+        try {
+            const project = await Project.findByIdAndDelete(projectId);
+            if (!project) {
+                return res.status(404).send({message: 'No se ha encontrado el proyecto'});
+            }
+            return res.status(200).send({project});
+        } catch (err) {
+            return res.status(500).send
+        }
+    },
+    uploadImage: async function (req, res) {
+        const projectId = req.params.id;
+
+        if (!req.files) {
+            return res.status(400).send({message: 'No se ha subido ninguna imagen'});
+        }
+
+        const filePath = req.files.image.path;
+
+        try {
+            const project = await Project.findByIdAndUpdate(projectId, {image: filePath}, {new: true});
+            if (!project) {
+                return res.status(404).send({message: 'No se ha encontrado el proyecto'});
+            }
+            return res.status(200).send({project});
+        } catch (err) {
+            return res.status(500).send({message: 'Error al actualizar el proyecto'});
+        }
     }
+
 };
 
 module.exports = controller;

@@ -8,7 +8,8 @@ var ProjectSchema = Schema({
     description: String,
     category: String,
     year: Number,
-    langs: [String]
+    langs: String,
+    image: String
 });
 
 // mongoose coge en name lo pone en minusculas y plural "projects" que coincide con el de mongo

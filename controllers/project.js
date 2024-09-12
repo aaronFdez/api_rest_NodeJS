@@ -1,5 +1,7 @@
 'use strict'
 var Project = require('../models/project');
+var fs = require('fs');
+var path = require('path');
 
 var controller = {
     home: function (req, res) {
@@ -99,8 +101,19 @@ var controller = {
         } catch (err) {
             return res.status(500).send({message: 'Error al actualizar el proyecto'});
         }
-    }
+    },
+    getImageFile: function (req, res) {
+        const file = req.params.image;
+        const path_file = path.resolve('./uploads', file);
 
+        fs.access(path_file, fs.constants.F_OK, (err) => {
+            if (err) {
+                const pathNoImage = path.resolve('./uploads/images/no-image.jpg');
+                return res.sendFile(pathNoImage);
+            }
+            return res.sendFile(path_file);
+        });
+    }
 };
 
 module.exports = controller;
